@@ -3,120 +3,533 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About | Jozilab repacks </title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <title>About - Jozilab Repacks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* General Styles */
-    body {
-      background-color: #0a0a0a;
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
+      box-sizing: border-box;
     }
 
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 0, 90, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 90, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 0, 90, 0.6);
+      border-radius: 50%;
+      animation: float linear infinite;
+      box-shadow: 0 0 10px rgba(255, 0, 90, 0.8);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: orbFloat 15s ease-in-out infinite;
+    }
+
+    .orb1 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 0, 90, 0.4), transparent);
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .orb2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.3), transparent);
+      top: 60%;
+      right: 10%;
+      animation-delay: 5s;
+    }
+
+    .orb3 {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(0, 191, 255, 0.3), transparent);
+      bottom: 20%;
+      left: 50%;
+      animation-delay: 10s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(50px, -50px) scale(1.1); }
+      66% { transform: translate(-50px, 50px) scale(0.9); }
+    }
+
+    /* Mouse Trail */
+    .mouse-trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 0, 90, 0.6), transparent);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: all 0.1s ease;
+      box-shadow: 0 0 20px rgba(255, 0, 90, 0.8);
+    }
+
+    /* Header */
     header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 40px;
-      background-color: #111;
-      position: sticky;
-      top: 0;
       z-index: 1000;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 0, 90, 0.2);
+      transition: all 0.3s ease;
     }
 
-    header .logo {
-      font-size: 1.8rem;
+    header.scrolled {
+      padding: 15px 50px;
+      background: rgba(10, 10, 15, 0.95);
+      box-shadow: 0 5px 20px rgba(255, 0, 90, 0.3);
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #ff005a, #ff00ff, #00d4ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255, 0, 90, 0.5);
+      animation: logoGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes logoGlow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
     }
 
     nav ul {
-      list-style: none;
       display: flex;
-      gap: 25px;
+      list-style: none;
+      gap: 30px;
     }
 
     nav ul li a {
-      text-decoration: none;
       color: #fff;
-      font-weight: 500;
-      transition: color 0.3s;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 600;
+      position: relative;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    nav ul li a:hover, nav ul li a.active {
+    nav ul li a::before {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ff005a, #ff00ff);
+      transition: width 0.3s ease;
+    }
+
+    nav ul li a:hover::before,
+    nav ul li a.active::before {
+      width: 100%;
+    }
+
+    nav ul li a:hover,
+    nav ul li a.active {
       color: #ff005a;
+      text-shadow: 0 0 10px rgba(255, 0, 90, 0.8);
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 1;
+      padding-top: 80px;
     }
 
     /* Hero Section */
     .hero-about {
+      position: relative;
       text-align: center;
-      padding: 120px 20px 80px;
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1605902711622-cfb43c4430aa?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1s forwards;
+      padding: 150px 20px 100px;
+      overflow: hidden;
+      animation: fadeInDown 1s ease;
+    }
+
+    .hero-about::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(10, 10, 15, 0.7), rgba(10, 10, 15, 0.9)), 
+                  url('https://images.unsplash.com/photo-1605902711622-cfb43c4430aa?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+      z-index: -1;
+      animation: zoomIn 20s ease infinite alternate;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
     }
 
     .hero-about h1 {
-      font-size: 3rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 56px;
+      font-weight: 900;
       margin-bottom: 20px;
+      background: linear-gradient(90deg, #ff005a, #ff00ff, #00d4ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(255, 0, 90, 0.5);
+      animation: titleGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { filter: brightness(1) drop-shadow(0 0 20px rgba(255, 0, 90, 0.5)); }
+      50% { filter: brightness(1.3) drop-shadow(0 0 30px rgba(255, 0, 90, 0.8)); }
     }
 
     .hero-about p {
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* About Content Section */
-    .about-content {
-      padding: 80px 20px;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1s forwards;
-      animation-delay: 0.5s;
-    }
-
-    .about-content h2 {
-      font-size: 2.5rem;
-      color: #ff005a;
-      margin-bottom: 30px;
-    }
-
-    .about-content p {
-      font-size: 1.1rem;
+      font-size: 22px;
       color: #ccc;
-      line-height: 1.7;
-      margin-bottom: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+      letter-spacing: 0.5px;
     }
 
-    /* Footer */
-    footer {
-      background-color: #111;
-      text-align: center;
-      padding: 20px;
-      color: #fff;
-      margin-top: 40px;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
+    /* About Content Section */
+    .about-content {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .content-card {
+      background: rgba(20, 20, 30, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 50px;
+      margin-bottom: 40px;
+      border: 1px solid rgba(255, 0, 90, 0.2);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.5s ease;
+    }
+
+    .content-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .content-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.7s ease;
+    }
+
+    .content-card:hover::before {
+      left: 100%;
+    }
+
+    .content-card:hover {
+      border-color: #ff005a;
+      box-shadow: 0 15px 40px rgba(255, 0, 90, 0.3);
+      transform: translateY(-5px);
+    }
+
+    .content-card h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      color: #ff005a;
+      margin-bottom: 25px;
+      text-align: center;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .content-card h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ff005a, transparent);
+      animation: lineGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes lineGlow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .content-card p {
+      font-size: 20px;
+      color: #ccc;
+      line-height: 1.8;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-box {
+      background: rgba(20, 20, 30, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      border: 1px solid rgba(255, 0, 90, 0.2);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.5s ease;
+    }
+
+    .feature-box.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .feature-box:hover {
+      border-color: #ff005a;
+      box-shadow: 0 15px 40px rgba(255, 0, 90, 0.4);
+      transform: translateY(-10px) scale(1.03);
+    }
+
+    .feature-icon {
+      font-size: 56px;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .feature-box h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 24px;
+      color: #ff005a;
+      margin-bottom: 15px;
+    }
+
+    .feature-box p {
+      font-size: 18px;
+      color: #aaa;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(10, 10, 15, 0.9);
+      border-top: 1px solid rgba(255, 0, 90, 0.2);
+      color: #888;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p {
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .hero-about {
+        padding: 120px 20px 80px;
+      }
+
+      .hero-about h1 {
+        font-size: 36px;
+      }
+
+      .hero-about p {
+        font-size: 18px;
+      }
+
+      .content-card {
+        padding: 30px 20px;
+      }
+
+      .content-card h2 {
+        font-size: 28px;
+      }
+
+      .content-card p {
+        font-size: 18px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        padding: 60px 20px;
+      }
+
+      .content {
+        padding-top: 140px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-about h1 {
+        font-size: 28px;
+      }
+
+      .content-card h2 {
+        font-size: 24px;
+      }
+    }
+
+    /* Page transition */
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header>
-    <div class="logo">🎮 Jozilab repacks </div>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="grid-bg"></div>
+    <div class="particles" id="particles"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <!-- Mouse Trail -->
+  <div class="mouse-trail" id="mouseTrail"></div>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="logo">🎮 JOZILAB REPACKS</div>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -127,44 +540,155 @@
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="hero-about">
-    <h1>About Jozilab repacks </h1>
-    <p>Welcome to my personal gaming hub! I create and share the latest games and programs, making your gaming experience smooth, fun, and exciting.</p>
-  </section>
+  <!-- Content -->
+  <div class="content">
+    <!-- Hero Section -->
+    <section class="hero-about">
+      <h1>ABOUT JOZILAB REPACKS</h1>
+      <p>Welcome to my personal gaming hub! I create and share the latest games and programs, making your gaming experience smooth, fun, and exciting.</p>
+    </section>
 
-  <!-- ABOUT CONTENT SECTION -->
-  <section class="about-content">
-    <h2>My Mission</h2>
-    <p>My goal is to provide gamers and software enthusiasts with easy access to games, programs, and resources that enhance their experience. Everything I do is designed to be simple, fast, and enjoyable.</p>
-    
-    <h2>My Vision</h2>
-    <p>I aim to become a trusted source for gamers worldwide, continuously updating and improving my platform to meet your gaming needs.</p>
+    <!-- About Content Section -->
+    <section class="about-content">
+      <div class="content-card">
+        <h2>🎯 My Mission</h2>
+        <p>My goal is to provide gamers and software enthusiasts with easy access to games, programs, and resources that enhance their experience. Everything I do is designed to be simple, fast, and enjoyable.</p>
+      </div>
 
-    <h2>Why Choose Jozilab repacks ?</h2>
-    <p>Unlike other sites, I manage everything personally, ensuring quality content, safe downloads, and a user-friendly experience. My focus is on the community and your satisfaction.</p>
-  </section>
+      <div class="content-card">
+        <h2>🚀 My Vision</h2>
+        <p>I aim to become a trusted source for gamers worldwide, continuously updating and improving my platform to meet your gaming needs.</p>
+      </div>
 
-  <!-- FOOTER -->
+      <div class="content-card">
+        <h2>💎 Why Choose Jozilab Repacks?</h2>
+        <p>Unlike other sites, I manage everything personally, ensuring quality content, safe downloads, and a user-friendly experience. My focus is on the community and your satisfaction.</p>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-grid">
+      <div class="feature-box">
+        <div class="feature-icon">⚡</div>
+        <h3>Fast Downloads</h3>
+        <p>Optimized servers ensure quick and reliable downloads for all content.</p>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">🔒</div>
+        <h3>Safe & Secure</h3>
+        <p>All files are personally tested and verified for safety and quality.</p>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">🎮</div>
+        <h3>Latest Games</h3>
+        <p>Regular updates with the newest games and programs available.</p>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">💝</div>
+        <h3>Community First</h3>
+        <p>Built by a gamer, for gamers. Your feedback shapes this platform.</p>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">🌟</div>
+        <h3>Quality Content</h3>
+        <p>Carefully curated selection of the best games and software.</p>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">🎯</div>
+        <h3>Easy Navigation</h3>
+        <p>Simple, intuitive interface designed for seamless browsing.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
   <footer>
-    <p>© 2025 Jozilab repacks  | Made with ❤️ by Jozilab </p>
+    <p>© 2025 Jozilab Repacks | Made with ❤️ by Jozilab</p>
   </footer>
 
-  <!-- Optional JS for more animations -->
   <script>
-    // Fade in sections on scroll
-    const sections = document.querySelectorAll('.hero-about, .about-content');
+    // Create floating particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+      particle.style.animationDelay = Math.random() * 5 + 's';
+      particlesContainer.appendChild(particle);
+    }
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
+    // Mouse trail effect
+    const mouseTrail = document.getElementById('mouseTrail');
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateTrail() {
+      trailX += (mouseX - trailX) * 0.1;
+      trailY += (mouseY - trailY) * 0.1;
+      mouseTrail.style.left = trailX + 'px';
+      mouseTrail.style.top = trailY + 'px';
+      requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll animations for content cards
+    const contentCards = document.querySelectorAll('.content-card');
+    const featureBoxes = document.querySelectorAll('.feature-box');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 150);
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.1 });
 
-    sections.forEach(section => {
-      observer.observe(section);
+    contentCards.forEach(card => observer.observe(card));
+    featureBoxes.forEach(box => observer.observe(box));
+
+    // Page transition on link click
+    const links = document.querySelectorAll('a[href^="index.html"], a[href^="games.html"], a[href^="programs.html"]');
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => {
+          window.location.href = link.href;
+        }, 500);
+      });
+    });
+
+    // Parallax effect on hero background
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const heroAbout = document.querySelector('.hero-about');
+      if (heroAbout) {
+        heroAbout.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
     });
   </script>
 </body>

@@ -3,247 +3,646 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Programs - Jozilab repacks </title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Programs - Jozilab Repacks</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* --- RESET --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-
-    body {
-      background-color: #0a0a0a;
-      color: #fff;
-      min-height: 100vh;
-      overflow-x: hidden;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    a { text-decoration: none; }
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
 
-    /* --- HEADER --- */
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 0, 90, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 90, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 0, 90, 0.6);
+      border-radius: 50%;
+      animation: float linear infinite;
+      box-shadow: 0 0 10px rgba(255, 0, 90, 0.8);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: orbFloat 15s ease-in-out infinite;
+    }
+
+    .orb1 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 0, 90, 0.4), transparent);
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .orb2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.3), transparent);
+      top: 60%;
+      right: 10%;
+      animation-delay: 5s;
+    }
+
+    .orb3 {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(0, 191, 255, 0.3), transparent);
+      bottom: 20%;
+      left: 50%;
+      animation-delay: 10s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(50px, -50px) scale(1.1); }
+      66% { transform: translate(-50px, 50px) scale(0.9); }
+    }
+
+    /* Mouse Trail */
+    .mouse-trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 0, 90, 0.6), transparent);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: all 0.1s ease;
+      box-shadow: 0 0 20px rgba(255, 0, 90, 0.8);
+    }
+
+    /* Header */
     header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 50px;
-      background-color: #111;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+      z-index: 1000;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 0, 90, 0.2);
+      transition: all 0.3s ease;
     }
 
-    .logo { font-size: 24px; font-weight: 600; }
+    header.scrolled {
+      padding: 15px 50px;
+      background: rgba(10, 10, 15, 0.95);
+      box-shadow: 0 5px 20px rgba(255, 0, 90, 0.3);
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #ff005a, #ff00ff, #00d4ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255, 0, 90, 0.5);
+      animation: logoGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes logoGlow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
 
     nav ul {
       display: flex;
       list-style: none;
-      gap: 25px;
+      gap: 30px;
     }
 
     nav ul li a {
       color: #fff;
-      font-weight: 500;
-      transition: color 0.3s;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 600;
+      position: relative;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav ul li a::before {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ff005a, #ff00ff);
+      transition: width 0.3s ease;
+    }
+
+    nav ul li a:hover::before,
+    nav ul li a.active::before {
+      width: 100%;
     }
 
     nav ul li a:hover,
-    nav ul li a.active { color: #ff005a; }
+    nav ul li a.active {
+      color: #ff005a;
+      text-shadow: 0 0 10px rgba(255, 0, 90, 0.8);
+    }
 
-    /* --- HERO SECTION --- */
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 1;
+      padding-top: 100px;
+    }
+
+    /* Hero Section */
     .hero {
       text-align: center;
-      padding: 50px 20px 30px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 0.8s forwards;
+      padding: 60px 20px 40px;
+      animation: fadeInDown 1s ease;
     }
 
-    .hero h1 { font-size: 36px; margin-bottom: 10px; }
-    .hero p { font-size: 18px; color: #aaa; }
-
-    /* --- SEARCH BAR --- */
-    .search-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 30px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 0.8s forwards;
-      animation-delay: 0.3s;
-    }
-
-    #programSearch {
-      width: 90%;
-      max-width: 450px;
-      padding: 12px 20px;
-      border-radius: 30px;
-      border: 1px solid #555;
-      background-color: #111;
-      color: #fff;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    #programSearch::placeholder { color: #777; }
-    #programSearch:focus { outline: none; border-color: #ff005a; box-shadow: 0 0 10px #ff005a; }
-
-    /* --- PROGRAM CARDS --- */
-    .program-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 25px;
-      justify-content: center;
-      padding: 0 20px 50px;
-    }
-
-    .program-card {
-      background-color: #111;
-      width: 220px;
-      min-height: 340px;
-      border-radius: 15px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      text-align: center;
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .program-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .program-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(255,0,90,0.5);
-    }
-
-    .program-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 56px;
+      font-weight: 900;
       margin-bottom: 15px;
+      background: linear-gradient(90deg, #ff005a, #ff00ff, #00d4ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(255, 0, 90, 0.5);
+      animation: titleGlow 2s ease-in-out infinite;
     }
 
-    .program-card h3 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      word-wrap: break-word;
+    @keyframes titleGlow {
+      0%, 100% { filter: brightness(1) drop-shadow(0 0 20px rgba(255, 0, 90, 0.5)); }
+      50% { filter: brightness(1.3) drop-shadow(0 0 30px rgba(255, 0, 90, 0.8)); }
     }
 
-    .download-btn {
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 30px;
-      background-color: #ff005a;
-      color: #fff;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-
-    .download-btn:hover { background-color: #e6004a; }
-
-    /* --- FOOTER --- */
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #111;
-      border-top: 1px solid #222;
+    .hero p {
+      font-size: 20px;
       color: #aaa;
+      letter-spacing: 1px;
     }
 
-    @media(max-width: 500px) {
-      .program-card { width: 90%; }
-      header { flex-direction: column; gap: 15px; }
-      nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
-    }
-
-    /* --- KEYFRAMES --- */
-    @keyframes fadeIn {
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
+    /* Search Bar */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin: 40px 20px;
+      animation: fadeInUp 1s ease 0.3s both;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #ff005a;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    #programSearch {
+      width: 100%;
+      padding: 18px 20px 18px 55px;
+      border-radius: 50px;
+      border: 2px solid rgba(255, 0, 90, 0.3);
+      background: rgba(20, 20, 30, 0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      font-size: 18px;
+      font-family: 'Rajdhani', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    #programSearch::placeholder {
+      color: #777;
+    }
+
+    #programSearch:focus {
+      outline: none;
+      border-color: #ff005a;
+      box-shadow: 0 0 30px rgba(255, 0, 90, 0.6), inset 0 0 20px rgba(255, 0, 90, 0.1);
+      background: rgba(20, 20, 30, 0.8);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Program Grid */
+    .program-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 40px 50px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .program-card {
+      background: rgba(20, 20, 30, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid rgba(255, 0, 90, 0.2);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    .program-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .program-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .program-card:hover::before {
+      left: 100%;
+    }
+
+    .program-card:hover {
+      transform: translateY(-10px) rotateX(5deg) rotateY(5deg) scale(1.03);
+      border-color: #ff005a;
+      box-shadow: 0 20px 40px rgba(255, 0, 90, 0.4), 0 0 30px rgba(255, 0, 90, 0.3);
+    }
+
+    .program-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      transition: transform 0.4s ease;
+    }
+
+    .program-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .program-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #fff;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .download-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #ff005a, #ff00ff);
+      border: none;
+      border-radius: 30px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .download-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .download-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .download-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(255, 0, 90, 0.5);
+      animation: bounce 0.6s ease;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1.05) translateY(0); }
+      50% { transform: scale(1.05) translateY(-5px); }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(10, 10, 15, 0.9);
+      border-top: 1px solid rgba(255, 0, 90, 0.2);
+      color: #888;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p {
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .program-list {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        padding: 30px 20px 60px;
+        gap: 20px;
+      }
+
+      .content {
+        padding-top: 140px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .program-list {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+    }
+
+    /* Page transition */
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
   </style>
 </head>
 <body>
+  <!-- Animated Background -->
+  <div class="bg-animation">
+    <div class="grid-bg"></div>
+    <div class="particles" id="particles"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo">🎮 Jozilab repacks </div>
+  <!-- Mouse Trail -->
+  <div class="mouse-trail" id="mouseTrail"></div>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="logo">🎮 JOZILAB REPACKS</div>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="games.html">Games</a></li>
-        <li><a href="programs.html" id="programsLink" class="active">Programs</a></li>
+        <li><a href="programs.html" class="active">Programs</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>⚙️ Essential Programs</h1>
-    <p>Download the best programs for your PC, all in one place.</p>
-  </section>
+  <!-- Content -->
+  <div class="content">
+    <!-- Hero -->
+    <section class="hero">
+      <h1>⚙️ ESSENTIAL PROGRAMS</h1>
+      <p>Download the best programs for your PC, all in one place.</p>
+    </section>
 
-  <!-- SEARCH -->
-  <div class="search-container">
-    <input type="text" id="programSearch" placeholder="Search for programs..." />
-  </div>
-
-  <!-- PROGRAM LIST -->
-  <section class="programs">
-    <div class="program-list" id="programList">
-      <div class="program-card" data-name="WinRAR">
-        <img src="https://cdn.neowin.com/news/images/uploaded/2025/06/1749554799_winrar.webp" alt="WinRAR">
-        <h3>WinRAR</h3>
-        <a href="https://www.win-rar.com/postdownload.html?&L=10" class="download-btn">Download</a>
-      </div>
-
-      <div class="program-card" data-name="OBS Studio">
-        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1905180/header.jpg?t=1733595297" alt="OBS Studio">
-        <h3>OBS Studio</h3>
-        <a href="https://obsproject.com/download" class="download-btn">Download</a>
-      </div>
-
-      <div class="program-card" data-name="Steam">
-        <img src="https://cdn.akamai.steamstatic.com/store/about/social-og.jpg" alt="Steam">
-        <h3>Steam</h3>
-        <a href="https://store.steampowered.com/about/" class="download-btn">Download</a>
-      </div>
-
-      <div class="program-card" data-name="Microsoft Office Professionnel Pre-activation">
-        <img src="https://mssolutions.ca/wp-content/uploads/2021/11/Office365-all-icons-750x500-1.png" alt="Microsoft">
-        <h3>Microsoft Office Professionnel Pre-activation </h3>
-        <a href="magnet:?xt=urn:btih:D8F5A9939155ED747DF7D60DA9A83A9A84E6159C&dn=Microsoft%20Office%202019%20Pro%20Plus%20Version%202108%20Build%2014326.20404%20x64%20En-US%20Pre-Activated%20%5bFileCR%5d.zip&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce&tr=udp%3a%2f%2ftracker.coppersurfer.tk%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.leechers-paradise.org%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.zer0day.to%3a1337%2fannounce&tr=udp%3a%2f%2feddie4.nl%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.open-internet.nl%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.torrent.eu.org%3a451%2fannounce&tr=wss%3a%2f%2ftracker.btorrent.xyz" class="download-btn">Download</a>
-      </div>
-      <div class="program-card" data-name="Adobe Photoshop">
-        <img src="https://img-c.udemycdn.com/course/480x270/5346430_f677.jpg" alt="Adobe Photoshop">
-        <h3>Adobe Photoshop 2025</h3>
-        <a href="magnet:?xt=urn:btih:1627a859a0e3d68f36a386ca13dbdbec72896df4&tr=http%3A%2F%2Fuztracker.net%2Fbt%2Fannounce.php%3Fuk%3DvfuJsYOdcdUtTzPZpvQJ&dn=Adobe+Photoshop+2026+%28v27.0%29+Multilingual" class="download-btn">Download</a>
-      </div>
-      <div class="program-card" data-name="Adobe After Effects">
-        <img src="https://instructorhq.sfo2.cdn.digitaloceanspaces.com/3/course/thumbnail/After%20Effects%20Learn%20Motion%20Graphic%20Design.jpg" alt="Adobe After Effects">
-        <h3>Adobe After Effects 2025</h3>
-        <a href="magnet:?xt=urn:btih:b5e3a205351c8f80da0801c2d7add8a11c38cfd1&tr=http%3A%2F%2Fuztracker.net%2Fbt%2Fannounce.php%3Fuk%3DvfuJsYOdcdUtTzPZpvQJ&dn=Adobe+After+Effects+2025+%28v25.5%29+Multilingual" class="download-btn">Download</a>
+    <!-- Search Bar -->
+    <div class="search-container">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="programSearch" placeholder="Search for programs..." />
       </div>
     </div>
-  </section>
 
-  <!-- FOOTER -->
+    <!-- Program Grid -->
+    <section class="programs">
+      <div class="program-list" id="programList">
+        <div class="program-card" data-name="WinRAR">
+          <img src="https://cdn.neowin.com/news/images/uploaded/2025/06/1749554799_winrar.webp" alt="WinRAR">
+          <h3>WinRAR</h3>
+          <a href="https://www.win-rar.com/postdownload.html?&L=10" class="download-btn">Download</a>
+        </div>
+
+        <div class="program-card" data-name="OBS Studio">
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1905180/header.jpg?t=1733595297" alt="OBS Studio">
+          <h3>OBS Studio</h3>
+          <a href="https://obsproject.com/download" class="download-btn">Download</a>
+        </div>
+
+        <div class="program-card" data-name="Steam">
+          <img src="https://cdn.akamai.steamstatic.com/store/about/social-og.jpg" alt="Steam">
+          <h3>Steam</h3>
+          <a href="https://store.steampowered.com/about/" class="download-btn">Download</a>
+        </div>
+
+        <div class="program-card" data-name="Microsoft Office Professional Pre-activation">
+          <img src="https://mssolutions.ca/wp-content/uploads/2021/11/Office365-all-icons-750x500-1.png" alt="Microsoft Office">
+          <h3>Microsoft Office Professional Pre-activation</h3>
+          <a href="magnet:?xt=urn:btih:D8F5A9939155ED747DF7D60DA9A83A9A84E6159C&dn=Microsoft%20Office%202019%20Pro%20Plus%20Version%202108%20Build%2014326.20404%20x64%20En-US%20Pre-Activated%20%5bFileCR%5d.zip&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce&tr=udp%3a%2f%2ftracker.coppersurfer.tk%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.leechers-paradise.org%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.zer0day.to%3a1337%2fannounce&tr=udp%3a%2f%2feddie4.nl%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.open-internet.nl%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.torrent.eu.org%3a451%2fannounce&tr=wss%3a%2f%2ftracker.btorrent.xyz" class="download-btn">Download</a>
+        </div>
+
+        <div class="program-card" data-name="Adobe Photoshop">
+          <img src="https://img-c.udemycdn.com/course/480x270/5346430_f677.jpg" alt="Adobe Photoshop">
+          <h3>Adobe Photoshop 2025</h3>
+          <a href="magnet:?xt=urn:btih:1627a859a0e3d68f36a386ca13dbdbec72896df4&tr=http%3A%2F%2Fuztracker.net%2Fbt%2Fannounce.php%3Fuk%3DvfuJsYOdcdUtTzPZpvQJ&dn=Adobe+Photoshop+2026+%28v27.0%29+Multilingual" class="download-btn">Download</a>
+        </div>
+
+        <div class="program-card" data-name="Adobe After Effects">
+          <img src="https://instructorhq.sfo2.cdn.digitaloceanspaces.com/3/course/thumbnail/After%20Effects%20Learn%20Motion%20Graphic%20Design.jpg" alt="Adobe After Effects">
+          <h3>Adobe After Effects 2025</h3>
+          <a href="magnet:?xt=urn:btih:b5e3a205351c8f80da0801c2d7add8a11c38cfd1&tr=http%3A%2F%2Fuztracker.net%2Fbt%2Fannounce.php%3Fuk%3DvfuJsYOdcdUtTzPZpvQJ&dn=Adobe+After+Effects+2025+%28v25.5%29+Multilingual" class="download-btn">Download</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
   <footer>
-    <p>© 2025 Jozilab repacks  | Made with ❤️ for gamers</p>
+    <p>© 2025 Jozilab Repacks | Made with ❤️ for gamers</p>
   </footer>
 
-  <!-- SEARCH SCRIPT + ANIMATIONS -->
   <script>
+    // Create floating particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+      particle.style.animationDelay = Math.random() * 5 + 's';
+      particlesContainer.appendChild(particle);
+    }
+
+    // Mouse trail effect
+    const mouseTrail = document.getElementById('mouseTrail');
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateTrail() {
+      trailX += (mouseX - trailX) * 0.1;
+      trailY += (mouseY - trailY) * 0.1;
+      mouseTrail.style.left = trailX + 'px';
+      mouseTrail.style.top = trailY + 'px';
+      requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Search functionality
     const searchInput = document.getElementById('programSearch');
     const programCards = document.querySelectorAll('.program-card');
 
@@ -251,20 +650,65 @@
       const query = this.value.toLowerCase();
       programCards.forEach(card => {
         const title = card.dataset.name.toLowerCase();
-        card.style.display = title.includes(query) ? 'flex' : 'none';
+        if (title.includes(query)) {
+          card.style.display = 'block';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 10);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 300);
+        }
       });
     });
 
-    // Animate cards on scroll
+    // Staggered card animations
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          entry.target.classList.add('visible');
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 100);
+          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
     programCards.forEach(card => observer.observe(card));
+
+    // Page transition on link click
+    const links = document.querySelectorAll('a[href^="index.html"], a[href^="games.html"], a[href^="about.html"]');
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => {
+          window.location.href = link.href;
+        }, 500);
+      });
+    });
+
+    // 3D tilt effect on cards
+    programCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0) rotateX(0) rotateY(0) scale(1)';
+      });
+    });
   </script>
 </body>
 </html>

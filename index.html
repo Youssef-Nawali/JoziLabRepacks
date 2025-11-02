@@ -3,227 +3,764 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jozilab repacks </title>
-<link rel="stylesheet" href="css/styles.css" />
-
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>Jozilab Repacks - Ultimate Gaming Zone</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-/* --- RESET --- */
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
-body { background:#0a0a0a; color:#fff; overflow-x:hidden; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { 
+  font-family:'Rajdhani', sans-serif; 
+  background:#000; 
+  color:#fff; 
+  overflow-x:hidden; 
+  position:relative;
+}
+
+/* --- ANIMATED BACKGROUND --- */
+.bg-animation {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:0;
+  overflow:hidden;
+}
+
+.particle {
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:rgba(255,0,90,0.8);
+  border-radius:50%;
+  animation:float 15s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform:translate(0, 0) scale(1); opacity:0; }
+  10% { opacity:1; }
+  90% { opacity:1; }
+  100% { transform:translate(var(--tx), var(--ty)) scale(0); }
+}
+
+.grid-bg {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background-image:
+    linear-gradient(rgba(255,0,90,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,0,90,0.1) 1px, transparent 1px);
+  background-size:50px 50px;
+  animation:gridMove 20s linear infinite;
+  z-index:1;
+}
+
+@keyframes gridMove {
+  0% { transform:translate(0, 0); }
+  100% { transform:translate(50px, 50px); }
+}
+
+.glow-orb {
+  position:fixed;
+  width:400px;
+  height:400px;
+  border-radius:50%;
+  filter:blur(100px);
+  opacity:0.3;
+  animation:orbMove 20s infinite ease-in-out;
+  z-index:1;
+}
+
+.orb1 {
+  background:radial-gradient(circle, #ff005a, transparent);
+  top:10%;
+  left:10%;
+  animation-delay:0s;
+}
+
+.orb2 {
+  background:radial-gradient(circle, #00ffe7, transparent);
+  bottom:10%;
+  right:10%;
+  animation-delay:10s;
+}
+
+.orb3 {
+  background:radial-gradient(circle, #7000ff, transparent);
+  top:50%;
+  left:50%;
+  animation-delay:5s;
+}
+
+@keyframes orbMove {
+  0%, 100% { transform:translate(0, 0) scale(1); }
+  25% { transform:translate(100px, -100px) scale(1.2); }
+  50% { transform:translate(-100px, 100px) scale(0.8); }
+  75% { transform:translate(100px, 100px) scale(1.1); }
+}
 
 /* --- LOADER --- */
 #loader {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:#0a0a0a; display:flex; flex-direction:column; justify-content:center; align-items:center;
-  z-index:9999; transition:opacity 0.5s ease;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:linear-gradient(135deg, #0a0a0a, #1a0a1a);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  transition:opacity 0.8s ease, transform 0.8s ease;
 }
-body.loaded #loader { opacity:0; pointer-events:none; }
-.spinner { width:50px; height:50px; border:5px solid #111; border-top:5px solid #ff005a; border-radius:50%; animation:spin 1s linear infinite; margin-bottom:15px; }
-@keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
+
+body.loaded #loader {
+  opacity:0;
+  transform:scale(1.5);
+  pointer-events:none;
+}
+
+.loader-content {
+  text-align:center;
+}
+
+.spinner {
+  width:80px;
+  height:80px;
+  border:6px solid transparent;
+  border-top:6px solid #ff005a;
+  border-right:6px solid #00ffe7;
+  border-radius:50%;
+  animation:spinComplex 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  margin:0 auto 30px;
+  position:relative;
+}
+
+.spinner::before {
+  content:"";
+  position:absolute;
+  top:5px; left:5px;
+  right:5px; bottom:5px;
+  border:3px solid transparent;
+  border-bottom:3px solid #7000ff;
+  border-radius:50%;
+  animation:spinComplex 1s reverse infinite;
+}
+
+@keyframes spinComplex {
+  0% { transform:rotate(0deg); }
+  100% { transform:rotate(360deg); }
+}
+
+.loader-text {
+  font-size:28px;
+  font-weight:700;
+  font-family:'Orbitron', sans-serif;
+  background:linear-gradient(90deg, #ff005a, #00ffe7, #7000ff, #ff005a);
+  background-size:300% 100%;
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:gradientFlow 3s linear infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position:0% 50%; }
+  100% { background-position:300% 50%; }
+}
 
 /* --- HEADER --- */
-header { display:flex; justify-content:space-between; align-items:center; padding:15px 50px; background:#111; position:sticky; top:0; z-index:10; box-shadow:0 3px 10px rgba(0,0,0,0.5); }
-.logo {
-  font-size:24px;
-  font-weight:600;
-  background: linear-gradient(90deg,#ff005a,#00ffe7);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  animation:gradientBG 3s linear infinite alternate;
+header {
+  position:sticky;
+  top:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 60px;
+  background:rgba(10,10,10,0.8);
+  backdrop-filter:blur(20px);
+  border-bottom:2px solid rgba(255,0,90,0.3);
+  z-index:100;
+  transition:all 0.3s ease;
 }
-@keyframes gradientBG { 0%{background-position:0%;}100%{background-position:100%;} }
-nav ul { display:flex; list-style:none; gap:25px; }
-nav ul li a { color:#fff; font-weight:500; transition:0.3s; }
-nav ul li a:hover, nav ul li a.active { color:#ff005a; }
+
+header.scrolled {
+  padding:15px 60px;
+  box-shadow:0 10px 40px rgba(255,0,90,0.3);
+}
+
+.logo {
+  font-size:32px;
+  font-weight:900;
+  font-family:'Orbitron', sans-serif;
+  background:linear-gradient(45deg, #ff005a, #00ffe7, #7000ff);
+  background-size:200% 200%;
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:logoGlow 3s ease-in-out infinite;
+  text-shadow:0 0 30px rgba(255,0,90,0.5);
+  cursor:pointer;
+  transition:transform 0.3s ease;
+}
+
+.logo:hover {
+  transform:scale(1.1) rotate(-2deg);
+}
+
+@keyframes logoGlow {
+  0%, 100% { background-position:0% 50%; filter:brightness(1); }
+  50% { background-position:100% 50%; filter:brightness(1.5); }
+}
+
+nav ul {
+  display:flex;
+  list-style:none;
+  gap:40px;
+}
+
+nav ul li {
+  position:relative;
+}
+
+nav ul li a {
+  color:#fff;
+  font-weight:600;
+  font-size:18px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  transition:all 0.3s ease;
+  position:relative;
+  padding:8px 0;
+}
+
+nav ul li a::before {
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:0;
+  height:2px;
+  background:linear-gradient(90deg, #ff005a, #00ffe7);
+  transition:width 0.4s ease;
+}
+
+nav ul li a:hover::before,
+nav ul li a.active::before {
+  width:100%;
+}
+
+nav ul li a:hover {
+  color:#ff005a;
+  text-shadow:0 0 20px rgba(255,0,90,0.8);
+  transform:translateY(-3px);
+}
 
 /* --- HERO --- */
-.hero { text-align:center; padding:80px 20px; position:relative; overflow:hidden; }
-.hero::before {
-  content:""; position:absolute; top:0; left:0; width:100%; height:100%;
-  background: linear-gradient(135deg, rgba(255,0,90,0.2), rgba(0,255,231,0.2)); z-index:-1;
-  animation:moveBG 15s linear infinite;
+.hero {
+  position:relative;
+  text-align:center;
+  padding:150px 20px;
+  overflow:hidden;
+  z-index:2;
 }
-@keyframes moveBG { 0%{transform:translateX(0);}100%{transform:translateX(50px);} }
 
-.hero h1 { font-size:48px; margin-bottom:20px; opacity:0; transform:translateY(20px); animation:fadeInUp 1s forwards; }
-.hero p { font-size:20px; color:#aaa; margin-bottom:30px; opacity:0; transform:translateY(20px); animation:fadeInUp 1s 0.3s forwards; }
-.btn { display:inline-block; padding:15px 40px; border-radius:50px; background:#ff005a; color:#fff; font-weight:600; font-size:18px; text-transform:uppercase; letter-spacing:1px; box-shadow:0 0 20px rgba(255,0,90,0.5); transition:0.3s; }
-.btn:hover { transform:scale(1.05); box-shadow:0 0 40px rgba(255,0,90,0.7); }
+.hero-content {
+  position:relative;
+  z-index:3;
+}
+
+.hero h1 {
+  font-size:72px;
+  font-weight:900;
+  font-family:'Orbitron', sans-serif;
+  margin-bottom:20px;
+  opacity:0;
+  transform:translateY(50px);
+  animation:heroFadeIn 1.2s 0.3s forwards;
+  background:linear-gradient(45deg, #fff, #ff005a, #00ffe7);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:0 0 50px rgba(255,0,90,0.5);
+}
+
+.hero p {
+  font-size:24px;
+  color:#aaa;
+  margin-bottom:40px;
+  opacity:0;
+  transform:translateY(50px);
+  animation:heroFadeIn 1.2s 0.6s forwards;
+  letter-spacing:1px;
+}
+
+@keyframes heroFadeIn {
+  to { opacity:1; transform:translateY(0); }
+}
+
+.btn {
+  display:inline-block;
+  padding:18px 50px;
+  border-radius:50px;
+  background:linear-gradient(135deg, #ff005a, #7000ff);
+  color:#fff;
+  font-weight:700;
+  font-size:20px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  position:relative;
+  overflow:hidden;
+  transition:all 0.4s ease;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 10px 40px rgba(255,0,90,0.4);
+}
+
+.btn::before {
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:0;
+  height:0;
+  border-radius:50%;
+  background:rgba(255,255,255,0.3);
+  transform:translate(-50%, -50%);
+  transition:width 0.6s ease, height 0.6s ease;
+}
+
+.btn:hover::before {
+  width:300px;
+  height:300px;
+}
+
+.btn:hover {
+  transform:translateY(-5px) scale(1.05);
+  box-shadow:0 20px 60px rgba(255,0,90,0.6);
+}
+
+.explore-options {
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  margin-top:30px;
+  opacity:0;
+  max-height:0;
+  overflow:hidden;
+  transition:all 0.5s ease;
+}
+
+.explore-options.active {
+  opacity:1;
+  max-height:200px;
+}
+
+.option-btn {
+  padding:15px 40px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(10px);
+  border:2px solid rgba(255,0,90,0.5);
+  color:#fff;
+  font-weight:600;
+  font-size:18px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.option-btn:hover {
+  background:rgba(255,0,90,0.3);
+  border-color:#ff005a;
+  transform:translateY(-3px);
+  box-shadow:0 10px 30px rgba(255,0,90,0.4);
+}
 
 /* --- SECTIONS --- */
-section { padding:60px 20px; }
-section h2 { font-size:32px; margin-bottom:40px; text-align:center; position:relative; }
-section h2::after { content:""; width:60px; height:3px; background:#ff005a; display:block; margin:10px auto 0; border-radius:2px; }
+section {
+  padding:100px 40px;
+  position:relative;
+  z-index:2;
+}
 
-/* --- GAME/PROGRAM CARDS --- */
-.game-list { display:flex; flex-wrap:wrap; gap:25px; justify-content:center; }
+section h2 {
+  font-size:48px;
+  font-weight:900;
+  font-family:'Orbitron', sans-serif;
+  margin-bottom:60px;
+  text-align:center;
+  position:relative;
+  background:linear-gradient(90deg, #ff005a, #00ffe7);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+section h2::after {
+  content:"";
+  width:100px;
+  height:4px;
+  background:linear-gradient(90deg, #ff005a, #00ffe7);
+  display:block;
+  margin:20px auto 0;
+  border-radius:2px;
+  animation:lineGrow 2s ease-in-out infinite;
+}
+
+@keyframes lineGrow {
+  0%, 100% { width:100px; }
+  50% { width:150px; }
+}
+
+/* --- GAME CARDS --- */
+.game-list {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:40px;
+  max-width:1400px;
+  margin:0 auto;
+}
+
 .game-card {
-  background:#111; width:220px; border-radius:15px; padding:15px; text-align:center; cursor:pointer;
-  transition:0.4s; opacity:0; transform:translateY(30px);
+  background:rgba(20,20,20,0.8);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  cursor:pointer;
+  transition:all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity:0;
+  transform:translateY(50px) rotateX(10deg);
+  border:2px solid rgba(255,0,90,0.2);
+  position:relative;
+  overflow:hidden;
 }
-.game-card.visible { opacity:1; transform:translateY(0); transition:0.6s ease; }
-.game-card img { width:100%; border-radius:10px; margin-bottom:15px; transition:0.4s; }
-.game-card h3 { font-size:18px; margin-bottom:10px; }
+
+.game-card::before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,0,90,0.3), transparent);
+  transition:left 0.5s ease;
+}
+
+.game-card:hover::before {
+  left:100%;
+}
+
+.game-card.visible {
+  opacity:1;
+  transform:translateY(0) rotateX(0);
+  transition:all 0.8s ease;
+}
+
+.game-card img {
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:15px;
+  margin-bottom:20px;
+  transition:all 0.5s ease;
+  filter:brightness(0.8);
+}
+
+.game-card:hover img {
+  transform:scale(1.05) translateY(-10px);
+  filter:brightness(1.1);
+  box-shadow:0 20px 40px rgba(255,0,90,0.5);
+}
+
+.game-card h3 {
+  font-size:22px;
+  margin-bottom:15px;
+  font-weight:700;
+  color:#fff;
+  transition:all 0.3s ease;
+}
+
+.game-card:hover h3 {
+  color:#ff005a;
+  text-shadow:0 0 20px rgba(255,0,90,0.8);
+}
+
 .download-btn {
-  display:inline-block; padding:10px 20px; border-radius:30px; background:#ff005a; color:#fff; font-weight:600;
-  transition:0.3s; box-shadow:0 0 15px rgba(255,0,90,0.5);
+  display:inline-block;
+  padding:12px 30px;
+  border-radius:30px;
+  background:linear-gradient(135deg, #ff005a, #00ffe7);
+  color:#fff;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  transition:all 0.4s ease;
+  box-shadow:0 5px 20px rgba(255,0,90,0.4);
+  position:relative;
+  overflow:hidden;
 }
-.download-btn:hover { background:#e6004a; box-shadow:0 0 30px rgba(255,0,90,0.8); }
 
-.game-card:hover { transform:translateY(-5px) rotateX(3deg) rotateY(3deg); box-shadow:0 15px 25px rgba(255,0,90,0.5); }
+.download-btn::after {
+  content:"⬇";
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  transition:all 0.3s ease;
+}
 
-/* --- ANIMATIONS --- */
-@keyframes fadeInUp { to { opacity:1; transform:translateY(0); } }
+.download-btn:hover {
+  transform:translateY(-3px);
+  box-shadow:0 10px 40px rgba(255,0,90,0.7);
+  background:linear-gradient(135deg, #e6004a, #00d4c0);
+}
+
+.download-btn:hover::after {
+  animation:downloadBounce 0.6s ease infinite;
+}
+
+@keyframes downloadBounce {
+  0%, 100% { transform:translateY(-50%); }
+  50% { transform:translateY(-30%); }
+}
+
+.game-card:hover {
+  transform:translateY(-15px) scale(1.02);
+  box-shadow:0 30px 60px rgba(255,0,90,0.4);
+  border-color:#ff005a;
+}
 
 /* --- FOOTER --- */
-footer { text-align:center; padding:20px; background:#111; border-top:1px solid #222; color:#aaa; }
+footer {
+  text-align:center;
+  padding:40px 20px;
+  background:rgba(10,10,10,0.9);
+  border-top:2px solid rgba(255,0,90,0.3);
+  position:relative;
+  z-index:2;
+}
 
-/* --- MEDIA --- */
-@media(max-width:500px) { .game-card { width:90%; } header { flex-direction:column; gap:15px; } nav ul { flex-wrap:wrap; justify-content:center; gap:15px; } }
+footer p {
+  color:#aaa;
+  font-size:18px;
+  font-weight:500;
+  letter-spacing:1px;
+}
+
+/* --- SCROLL ANIMATIONS --- */
+.fade-in-up {
+  opacity:0;
+  transform:translateY(50px);
+  transition:all 0.8s ease;
+}
+
+.fade-in-up.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* --- RESPONSIVE --- */
+@media(max-width:768px) {
+  header { flex-direction:column; gap:20px; padding:20px; }
+  nav ul { flex-wrap:wrap; justify-content:center; gap:20px; }
+  .hero h1 { font-size:42px; }
+  .hero p { font-size:18px; }
+  .game-list { grid-template-columns:1fr; }
+  section h2 { font-size:36px; }
+}
 </style>
 </head>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Games link fade
-  const gamesLink = document.getElementById("gamesLink");
-  gamesLink.addEventListener("click", e => {
-    e.preventDefault();
-    document.body.classList.add("fade-out");
-    setTimeout(()=>{ window.location.href="games.html"; },500);
-  });
-});
-</script>
-
 <body>
 
+<!-- ANIMATED BACKGROUND -->
+<div class="bg-animation">
+  <div class="grid-bg"></div>
+  <div class="glow-orb orb1"></div>
+  <div class="glow-orb orb2"></div>
+  <div class="glow-orb orb3"></div>
+</div>
+
+<!-- LOADER -->
 <div id="loader">
-  <div class="spinner"></div>
-  <p>Loading...</p>
+  <div class="loader-content">
+    <div class="spinner"></div>
+    <div class="loader-text">LOADING ULTIMATE GAMING</div>
+  </div>
 </div>
 
 <!-- HEADER -->
-<header>
-  <div class="logo">🎮 Jozilab repacks </div>
+<header id="header">
+  <div class="logo">🎮 JOZILAB</div>
   <nav>
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="games.html" id="gamesLink">Games</a></li>
-      <li><a href="programs.html" id="programsLink">Programs</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="#" class="active">HOME</a></li>
+      <li><a href="games.html">GAMES</a></li>
+      <li><a href="programs.html">PROGRAMS</a></li>
+      <li><a href="about.html">ABOUT</a></li>
     </ul>
   </nav>
 </header>
 
+<!-- HERO -->
 <section class="hero">
-  <h1>Welcome to the Ultimate Gaming Zone</h1>
-  <p>Download the latest games and programs for free.</p>
-  <a href="#" id="exploreBtn" class="btn">Explore Now</a>
-
-  <!-- Hidden options -->
-  <div id="exploreOptions" class="explore-options">
-    <button id="exploreGames" class="option-btn">Games</button>
-    <button id="explorePrograms" class="option-btn">Programs</button>
+  <div class="hero-content">
+    <h1>THE ULTIMATE GAMING ZONE</h1>
+    <p>Experience Next-Level Gaming • Download Premium Games & Programs</p>
+    <button id="exploreBtn" class="btn">EXPLORE NOW</button>
+    
+    <div id="exploreOptions" class="explore-options">
+      <button id="exploreGames" class="option-btn">🎮 Games</button>
+      <button id="explorePrograms" class="option-btn">⚙️ Programs</button>
+    </div>
   </div>
 </section>
 
-
 <!-- GAMES -->
 <section class="games">
-  <h2>🔥 Popular Games</h2>
+  <h2>🔥 POPULAR GAMES</h2>
   <div class="game-list" id="gameList">
     <div class="game-card" data-name="Resident Evil 4 Remake">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpMiHDzXrYn4fvoRk12BCOu2c3QGu8zt3tNw&s" alt="Resident Evil 4 Remake">
       <h3>Resident Evil 4 Remake</h3>
-        <a href="magnet:?xt=urn:btih:18A89755E51616C9E8E904FF360E364DEB4B0922&dn=Red+Dead+Redemption+2%3A+Ultimate+Edition+%28Build+1491.50+%2B+UE+Unlocker%2C+MULTi13%29+%5BFitGirl+Repack%5D&tr=udp%3A%2F%2Fopentor.net%3A6969&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=http%3A%2F%2Ftracker.gbitt.info%3A80%2Fannounce&tr=http%3A%2F%2Ftracker.ccp.ovh%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.ccp.ovh%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.theoks.net%3A6969%2Fannounce&tr=https%3A%2F%2Ftracker.tamersunion.org%3A443%2Fannounce&tr=http%3A%2F%2Fopen.acgnxtracker.com%3A80%2Fannounce&tr=http%3A%2F%2Fopen.acgtracker.com%3A1096%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=http%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce" class="download-btn">Download</a>
+      <a href="magnet:?xt=urn:btih:18A89755E51616C9E8E904FF360E364DEB4B0922&dn=Red+Dead+Redemption+2" class="download-btn">Download</a>
     </div>
     <div class="game-card" data-name="Call of Duty Modern Warfare II">
       <img src="https://cdn-uploads.gameblog.fr/img/review/408969_635facf70d9bb.jpg" alt="Call of Duty MW2">
-      <h3>Call of Duty: Modern Warfare II</h3>
-        <a href="magnet:?xt=urn:btih:BE7B270688C4DBF718AD0268BCE1D4A3E523B681" class="download-btn">Download</a>
+      <h3>Call of Duty: MW II</h3>
+      <a href="magnet:?xt=urn:btih:BE7B270688C4DBF718AD0268BCE1D4A3E523B681" class="download-btn">Download</a>
     </div>
     <div class="game-card" data-name="Assassin's Creed Mirage">
-      <img src="https://image.api.playstation.com/vulcan/ap/rnd/202304/2714/5818a7273f4bb193fba2767a0a2fb9aacc6585233f0ba410.jpg" alt="Assassin’s Creed Mirage">
-      <h3>Assassin’s Creed Mirage</h3>
-        <a href="magnet:?xt=urn:btih:BB2BC4624F1D63FF9C78F802FEB42431B1184490&dn=Assassin%26%23039%3Bs+Creed+Mirage%3A+Master+Assassin+Edition+%28v1.0.6+%2B+All+DLCs+%2B+Bonus+Content%2C+MULTi14%29+%5BFitGirl+Repack%2C+Selective+Download+-+from+18.3+GB%5D&tr=udp%3A%2F%2Fopentor.net%3A6969&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Ftracker.theoks.net%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.ccp.ovh%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=http%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=https%3A%2F%2Ftracker.tamersunion.org%3A443%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=http%3A%2F%2Ftracker.bt4g.com%3A2095%2Fannounce&tr=udp%3A%2F%2Fbt2.archive.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fbt1.archive.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.filemail.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker1.bt.moack.co.kr%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=http%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce" class="download-btn">Download</a>
+      <img src="https://image.api.playstation.com/vulcan/ap/rnd/202304/2714/5818a7273f4bb193fba2767a0a2fb9aacc6585233f0ba410.jpg" alt="Assassin's Creed Mirage">
+      <h3>Assassin's Creed Mirage</h3>
+      <a href="magnet:?xt=urn:btih:BB2BC4624F1D63FF9C78F802FEB42431B1184490" class="download-btn">Download</a>
     </div>
   </div>
 </section>
 
 <!-- PROGRAMS -->
 <section class="programs">
-  <h2>⚙️ Useful Programs</h2>
+  <h2>⚙️ ESSENTIAL PROGRAMS</h2>
   <div class="game-list">
     <div class="game-card" data-name="WinRAR">
       <img src="https://cdn.neowin.com/news/images/uploaded/2025/06/1749554799_winrar.webp" alt="WinRAR">
       <h3>WinRAR</h3>
-        <a href="https://www.win-rar.com/postdownload.html?&L=10" class="download-btn">Download</a>
+      <a href="https://www.win-rar.com/postdownload.html?&L=10" class="download-btn">Download</a>
     </div>
     <div class="game-card" data-name="OBS Studio">
       <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1905180/header.jpg?t=1733595297" alt="OBS Studio">
       <h3>OBS Studio</h3>
-        <a href="https://obsproject.com/download" class="download-btn">Download</a>
+      <a href="https://obsproject.com/download" class="download-btn">Download</a>
     </div>
     <div class="game-card" data-name="Steam">
       <img src="https://cdn.akamai.steamstatic.com/store/about/social-og.jpg" alt="Steam">
       <h3>Steam</h3>
-        <a href="https://store.steampowered.com/about/" class="download-btn">Download</a>
+      <a href="https://store.steampowered.com/about/" class="download-btn">Download</a>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2025 Jozilab repacks  | Made with ❤️ for gamers</p>
+  <p>© 2025 JOZILAB REPACKS | CRAFTED WITH ❤️ FOR GAMERS WORLDWIDE</p>
 </footer>
 
-<!-- SCRIPT FOR ANIMATIONS -->
 <script>
-window.addEventListener("load", () => {
-  document.body.classList.add("loaded");
+// PARTICLES GENERATION
+function createParticles() {
+  const bg = document.querySelector('.bg-animation');
+  for(let i = 0; i < 50; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.setProperty('--tx', (Math.random() - 0.5) * 1000 + 'px');
+    particle.style.setProperty('--ty', (Math.random() - 0.5) * 1000 + 'px');
+    particle.style.animationDelay = Math.random() * 15 + 's';
+    particle.style.background = ['rgba(255,0,90,0.8)', 'rgba(0,255,231,0.8)', 'rgba(112,0,255,0.8)'][Math.floor(Math.random() * 3)];
+    bg.appendChild(particle);
+  }
+}
 
+// LOADER
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.body.classList.add("loaded");
+  }, 1500);
+  
+  createParticles();
+  
   const cards = document.querySelectorAll('.game-card');
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) entry.target.classList.add('visible');
+    entries.forEach((entry, index) => {
+      if(entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 100);
+      }
     });
-  }, { threshold:0.2 });
-
+  }, { threshold:0.1 });
+  
   cards.forEach(card => observer.observe(card));
 });
-</script>
 
-<script>
+// HEADER SCROLL EFFECT
+window.addEventListener('scroll', () => {
+  const header = document.getElementById('header');
+  if(window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// EXPLORE BUTTONS
 document.addEventListener("DOMContentLoaded", () => {
   const exploreBtn = document.getElementById("exploreBtn");
   const exploreOptions = document.getElementById("exploreOptions");
   const gamesBtn = document.getElementById("exploreGames");
   const programsBtn = document.getElementById("explorePrograms");
 
-  // Toggle options visibility
   exploreBtn.addEventListener("click", (e) => {
     e.preventDefault();
     exploreOptions.classList.toggle("active");
   });
 
-  // Redirect buttons
   gamesBtn.addEventListener("click", () => {
-    window.location.href = "games.html";
+    document.querySelector('.games').scrollIntoView({ behavior: 'smooth' });
   });
 
   programsBtn.addEventListener("click", () => {
-    window.location.href = "programs.html";
+    document.querySelector('.programs').scrollIntoView({ behavior: 'smooth' });
   });
 });
+
+// MOUSE TRAIL EFFECT
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  
+  const trail = document.createElement('div');
+  trail.style.position = 'fixed';
+  trail.style.left = mouseX + 'px';
+  trail.style.top = mouseY + 'px';
+  trail.style.width = '10px';
+  trail.style.height = '10px';
+  trail.style.borderRadius = '50%';
+  trail.style.background = 'rgba(255,0,90,0.5)';
+  trail.style.pointerEvents = 'none';
+  trail.style.zIndex = '9999';
+  trail.style.animation = 'trailFade 0.5s forwards';
+  document.body.appendChild(trail);
+  
+  setTimeout(() => trail.remove(), 500);
+});
+
+const style = document.createElement('style');
+style.textContent = '@keyframes trailFade { to { opacity:0; transform:scale(0); } }';
+document.head.appendChild(style);
 </script>
 
-
-
-<script src="js/script.js"></script>
 </body>
 </html>
