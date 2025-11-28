@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback - Jozilab Repacks</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  font-family: 'Rajdhani', sans-serif;
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated Background */
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.bg-gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 0, 90, 0.2) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(0, 255, 231, 0.2) 0%, transparent 50%),
+              radial-gradient(circle at 50% 20%, rgba(138, 43, 226, 0.2) 0%, transparent 50%);
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(50px, -50px) scale(1.1); }
+  66% { transform: translate(-50px, 50px) scale(0.9); }
+}
+
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: float 20s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
+}
+
+/* Content Container */
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Back Button */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 0, 90, 0.3);
+  border-radius: 50px;
+  color: #00ffe7;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.back-button:hover {
+  background: rgba(255, 0, 90, 0.2);
+  border-color: #ff005a;
+  transform: translateX(-5px);
+  box-shadow: 0 0 20px rgba(255, 0, 90, 0.5);
+}
+
+.back-button svg {
+  transition: transform 0.3s ease;
+}
+
+.back-button:hover svg {
+  transform: translateX(-3px);
+}
+
+/* Title */
+h1 {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(36px, 8vw, 72px);
+  font-weight: 900;
+  background: linear-gradient(135deg, #ff005a 0%, #ff0099 25%, #00ffe7 50%, #00d4ff 75%, #ff005a 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientMove 6s ease infinite, glow 2s ease-in-out infinite alternate;
+  margin-bottom: 20px;
+  text-shadow: 0 0 40px rgba(255, 0, 90, 0.5);
+  letter-spacing: 3px;
+}
+
+@keyframes gradientMove {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 20px rgba(255, 0, 90, 0.7)); }
+  to { filter: drop-shadow(0 0 40px rgba(0, 255, 231, 0.9)); }
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 50px;
+  letter-spacing: 2px;
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Form Container */
+.comment-box {
+  max-width: 800px;
+  margin: 0 auto 60px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 40px;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  backdrop-filter: blur(20px);
+  animation: slideUp 0.8s ease-out;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.comment-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 30px;
+  padding: 2px;
+  background: linear-gradient(135deg, #ff005a, #00ffe7, #8a2be2, #ff005a);
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderGlow 4s linear infinite;
+  z-index: -1;
+}
+
+@keyframes borderGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #00ffe7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.comment-box input,
+.comment-box textarea {
+  width: 100%;
+  padding: 18px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 16px;
+  font-family: 'Rajdhani', sans-serif;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.comment-box input:focus,
+.comment-box textarea:focus {
+  border-color: #ff005a;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px rgba(255, 0, 90, 0.3), inset 0 0 20px rgba(255, 0, 90, 0.1);
+  transform: translateY(-2px);
+}
+
+.comment-box textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.comment-box button {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #ff005a, #ff0099, #00ffe7);
+  background-size: 200% 200%;
+  border: none;
+  border-radius: 50px;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(255, 0, 90, 0.4);
+}
+
+.comment-box button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.comment-box button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.comment-box button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(255, 0, 90, 0.6), 0 0 40px rgba(0, 255, 231, 0.4);
+  background-position: 100% 0;
+}
+
+.comment-box button:active {
+  transform: translateY(-1px);
+}
+
+/* Comments Section */
+.comment-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  color: #00ffe7;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.comment {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 30px;
+  margin: 20px 0;
+  border-radius: 20px;
+  border-left: 5px solid #ff005a;
+  backdrop-filter: blur(10px);
+  position: relative;
+  animation: fadeInUp 0.5s ease-out;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.comment:hover {
+  transform: translateX(10px);
+  border-left-color: #00ffe7;
+  box-shadow: 0 8px 25px rgba(255, 0, 90, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.comment::before {
+  content: '"';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 60px;
+  color: rgba(255, 0, 90, 0.2);
+  font-family: serif;
+  line-height: 1;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.comment-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff005a, #00ffe7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin-right: 15px;
+  box-shadow: 0 4px 15px rgba(255, 0, 90, 0.4);
+}
+
+.comment strong {
+  font-size: 22px;
+  color: #00ffe7;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 10px rgba(0, 255, 231, 0.5);
+}
+
+.comment p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  font-size: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .comment-box {
+    padding: 30px 20px;
+  }
+  
+  .comment {
+    padding: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-animation">
+  <div class="bg-gradient"></div>
+  <div class="particles" id="particles"></div>
+</div>
+
+<div class="content">
+  <a href="javascript:history.back()" class="back-button">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    <span>Back</span>
+  </a>
+  
+  <h1>💬 USER FEEDBACK</h1>
+  <p class="subtitle">Share Your Thoughts • Shape The Future</p>
+
+  <div class="comment-box">
+    <div class="input-group">
+      <label for="username">Name</label>
+      <input id="username" type="text" placeholder="Enter your name...">
+    </div>
+    
+    <div class="input-group">
+      <label for="message">Feedback</label>
+      <textarea id="message" rows="5" placeholder="Share your experience, suggestions, or thoughts..."></textarea>
+    </div>
+    
+    <button onclick="addComment()">
+      <span style="position: relative; z-index: 1;">Submit Feedback</span>
+    </button>
+  </div>
+
+  <div class="section-title" id="commentsTitle" style="display: none;">Community Feedback</div>
+  <div id="commentList" class="comment-list"></div>
+</div>
+
+<script>
+// Create floating particles
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 50; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+    particle.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
+    particle.style.animationDelay = Math.random() * 20 + 's';
+    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+    container.appendChild(particle);
+  }
+}
+
+createParticles();
+
+// Use in-memory storage instead of localStorage
+let commentsData = [];
+
+// Display all comments
+function displayAllComments() {
+  const list = document.getElementById("commentList");
+  const title = document.getElementById("commentsTitle");
+  
+  list.innerHTML = '';
+  
+  if (commentsData.length === 0) {
+    list.innerHTML = '<div class="empty-state">No feedback yet. Be the first to share your thoughts!</div>';
+    title.style.display = 'none';
+  } else {
+    title.style.display = 'block';
+    commentsData.forEach(c => displayComment(c.name, c.msg));
+  }
+}
+
+// Add comment
+function addComment() {
+  let name = document.getElementById("username").value;
+  let msg = document.getElementById("message").value;
+
+  if (name.trim() === "" || msg.trim() === "") {
+    alert("⚠️ Please enter your name and feedback.");
+    return;
+  }
+
+  // Save to memory
+  commentsData.push({ name, msg });
+  
+  displayAllComments();
+
+  // Clear inputs with animation
+  document.getElementById("username").value = "";
+  document.getElementById("message").value = "";
+  
+  // Success feedback
+  const btn = document.querySelector('.comment-box button');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '<span style="position: relative; z-index: 1;">✓ Submitted!</span>';
+  btn.style.background = 'linear-gradient(135deg, #00ff88, #00ffe7)';
+  
+  setTimeout(() => {
+    btn.innerHTML = originalText;
+    btn.style.background = '';
+  }, 2000);
+}
+
+// Display single comment
+function displayComment(name, msg) {
+  let box = document.getElementById("commentList");
+
+  let div = document.createElement("div");
+  div.classList.add("comment");
+  
+  const initial = name.charAt(0).toUpperCase();
+  
+  div.innerHTML = `
+    <div class="comment-header">
+      <div class="comment-avatar">${initial}</div>
+      <strong>${name}</strong>
+    </div>
+    <p>${msg}</p>
+  `;
+
+  box.appendChild(div);
+}
+
+// Initial load
+displayAllComments();
+</script>
+
+</body>
+</html>
