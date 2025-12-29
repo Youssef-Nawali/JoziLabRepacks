@@ -483,6 +483,31 @@ footer p {
     font-size:24px;
   }
 }
+.download-options {
+  display: none;
+  margin-top: 15px;
+  animation: slideDown 0.4s ease;
+}
+
+.offline-label {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #00ffb7;
+  text-shadow: 0 0 10px rgba(0,255,183,0.6);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>
 </head>
 
@@ -688,6 +713,12 @@ footer p {
       <a href="magnet:?xt=urn:btih:F3D5D58B70D08978FE4E1F0BAC2DF5964AB67615&dn=FIFA%2019%20%28Update%204%20%2b%20Latest%20Squad%20%2b%20%20MULTi18%20%2b%20CrackFix%29%20-%20%5bDODI%20Repack%5d&tr=http%3a%2f%2ftracker.trackerfix.com%3a80%2fannounce&tr=udp%3a%2f%2f9.rarbg.me%3a2710%2fannounce&tr=udp%3a%2f%2f9.rarbg.to%3a2710%2fannounce&tr=udp%3a%2f%2ftracker.leechers-paradise.org%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.coppersurfer.tk%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce&tr=udp%3a%2f%2ftracker.zer0day.to%3a1337%2fannounce&tr=udp%3a%2f%2feddie4.nl%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a80%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce" class="download-btn">Download</a>
     </div>
 
+    <div class="game-card">
+      <img src="https://cdn.sortiraparis.com/images/80/66131/1157608-assassin-s-creed-shadows-notre-avis-sur-le-jeu-d-ubisoft-au-coeur-du-japon-feodal.jpg" alt="Assassin's creed shaodws ">
+      <h3> Assassin’s Creed Shadows (Free Offline Activation)</h3>
+      <a href="magnet:?xt=urn:btih:02E6AA5A35F20A4CFCFEFB00171323DD5B9952DB&dn=Assassin%20Creed%20Shadows%20%5bDODI%20Repack%5d&tr=udp%3a%2f%2f9.rarbg.to%3a2870%2fannounce&tr=udp%3a%2f%2feddie4.nl%3a6969%2fannounce&tr=udp%3a%2f%2fthetracker.org%3a80%2fannounce&tr=udp%3a%2f%2ftracker.coppersurfer.tk%3a6969&tr=udp%3a%2f%2ftracker.leechers-paradise.org%3a6969&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337&tr=udp%3a%2f%2ftracker.zer0day.to%3a1337&tr=udp%3a%2f%2f9.rarbg.com%3a2710%2fannounce&tr=udp%3a%2f%2fexplodie.org%3a6969%2fannounce&tr=udp%3a%2f%2ftracker1.wasabii.com.tw%3a6969%2fannounce&tr=udp%3a%2f%2ftracker.torrent.eu.org%3a451%2fannounce&tr=udp%3a%2f%2ftracker.cypherpunks.ru%3a6969%2fannounce&tr=http%3a%2f%2fp4p.arenabg.com%3a1337%2fannounce" class="download-btn">Download</a>
+       <a href="https://discord.gg/9YPkXGhr5s" class="download-btn">✔ Free Offline Activation</a>
+    </div>
 
   </div>
 </section>
@@ -806,6 +837,21 @@ const style = document.createElement('style');
 style.textContent = '@keyframes trailFade { to { opacity:0; transform:scale(0); } }';
 document.head.appendChild(style);
 </script>
+
+<script>
+function toggleOptions(card) {
+  const options = card.querySelector('.download-options');
+
+  // close others
+  document.querySelectorAll('.download-options').forEach(opt => {
+    if (opt !== options) opt.style.display = 'none';
+  });
+
+  options.style.display =
+    options.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+
 
 </body>
 </html>
